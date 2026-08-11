@@ -17,7 +17,7 @@ public class DogRepository : IDogRepository
         _context = context;
     }
 
-    public async Task<Dog> Create(CreateDogDto dog)
+    public async Task<CreatedDogDto> Create(CreateDogDto dog)
     {
         var microchip = await _context.Dogs.FirstOrDefaultAsync(d => d.MicrochipId == dog.MicrochipId);
         if (microchip != null)
@@ -44,7 +44,20 @@ public class DogRepository : IDogRepository
 
         await _context.Dogs.AddAsync(fullDog);
         await _context.SaveChangesAsync();
-        return await _context.Dogs.FirstOrDefaultAsync(d => d.MicrochipId == fullDog.MicrochipId);
+        var alldog = await _context.Dogs.FirstOrDefaultAsync(d => d.MicrochipId == fullDog.MicrochipId);
+
+
+        CreatedDogDto createdDog = new CreatedDogDto
+        {
+            Id = alldog.Id,
+            Name = fullDog.Name,
+            Breed = fullDog.Breed,
+            MicrochipId = fullDog.MicrochipId,
+            DateOfBirth = fullDog.DateOfBirth,
+            Specialty = fullDog.Specialty.ToString(),
+            Status = fullDog.Status.ToString()
+        };
+        return createdDog;
     }
 
     public async Task<GetDogByIdDto?> GetById(int id)

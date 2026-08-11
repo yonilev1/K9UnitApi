@@ -27,10 +27,6 @@ public class k9DbContext : DbContext
             .IsRequired(false)
             .OnDelete(DeleteBehavior.SetNull);
 
-        //modelBuilder.Entity<Dog>()
-        //.Property(e => e.HandlerId)
-        //.IsRequired(false);
-
         modelBuilder.Entity<TrainingSession>()
             .HasOne(t => t.Dog)
             .WithMany(d => d.TrainingSessions)
