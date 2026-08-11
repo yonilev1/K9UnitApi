@@ -34,4 +34,17 @@ public class TrainingSessionController : ControllerBase
         }
         
     }
+
+    [HttpGet("detailed")]
+    public async Task<ActionResult<IEnumerable<TrainingFullDetails>>> GetTrainingWithFullDetails()
+    {
+        return Ok(await _repository.GetTrainingWithFullDetails());
+    }
+
+    [HttpGet("paged")]
+    public async Task<ActionResult<PageData<PagedDto>>> GetPagedData(int page = 1, int pageSize = 10)
+    {
+        return Ok( await _repository.GetPagedData(page, pageSize));
+    }
+
 }

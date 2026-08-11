@@ -2,6 +2,7 @@
 using K9UnitApi.DTO_s;
 using K9UnitApi.Enums;
 using K9UnitApi.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace K9UnitApi.Repositories;
 
@@ -61,5 +62,54 @@ public class TrainingSessionRepository : ITrainingSessionRepository
         await _context.TrainingSessions.AddAsync(fullSession);
         await _context.SaveChangesAsync();
         return toReturn;
+    }
+
+    public async Task<IEnumerable<TrainingFullDetails>> GetTrainingWithFullDetails()
+    {
+        return await _context.TrainingSessions.Select(s =>
+        new TrainingFullDetails
+        {
+            Id = s.Id,
+            SessionDate = s.SessionDate,
+            DurationMinutes = s.DurationMinutes,
+            TrainingType = s.TrainingType.ToString(),
+            PerformanceScore = s.PerformanceScore,
+            Passed = s.Passed,
+            Evaluator = s.Evaluator,
+            DogName = s.Dog.Name,
+            DogSpetiality = s.Dog.Specialty.ToString(),
+            HandlerName = s.Dog.Handler != null ? s.Dog.Handler.FullName : null
+        }).ToListAsync();
+    }
+
+    public async Task<PageData<PagedDto>> GetPagedData(int page = 1, int pageSize = 10)
+    {
+        if (page < 1 || pageSize < 5 || pageSize > 50)
+            throw new ArgumentException("Page number or Page size out of range");
+
+        int skip = (page - 1) * pageSize;
+        int total = await _context.TrainingSessions.CountAsync();
+
+        var pages = await _context.TrainingSessions
+            .OrderByDescending(s => s.SessionDate)
+            .Skip(skip)
+            .Take(pageSize)
+            .Select(s =>
+            new PagedDto
+            {
+                Id = s.Id,
+                SessionDate = s.SessionDate,
+                PerformanceScore = s.PerformanceScore,
+                DogName = s.Dog != null ? s.Dog.Name : null
+            }).ToListAsync();
+
+        return new PageData<PagedDto>
+        {
+            items = pages,
+            pageNumber = page,
+            pageSize = pageSize,
+            totalCount = total,
+            totalPages = total / pageSize + 1
+        };
     }
 }
