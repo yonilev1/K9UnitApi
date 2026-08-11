@@ -6,4 +6,6 @@ public interface IDogRepository
 {
     Task<Dog> Create(CreateDogDto dog);
     Task<GetDogByIdDto?> GetById(int id);
+
+    Task<IEnumerable<SearchDogDto>> Filter()
 }

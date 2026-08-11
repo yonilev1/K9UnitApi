@@ -18,6 +18,7 @@ options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
 
 builder.Services.AddScoped<IDogRepository, DogRepository>();
 builder.Services.AddScoped<ITrainingSessionRepository, TrainingSessionRepository>();
+builder.Services.AddScoped<IHandlerRepository, HandlerRepository>();
 
 var app = builder.Build();
 

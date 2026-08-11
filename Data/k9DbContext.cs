@@ -24,7 +24,7 @@ public class k9DbContext : DbContext
             .WithOne(h => h.Dog)
             .HasForeignKey<Dog>(d => d.HandlerId)
             .IsRequired(false)
-            .OnDelete(DeleteBehavior.NoAction);
+            .OnDelete(DeleteBehavior.SetNull);
 
         modelBuilder.Entity<TrainingSession>()
             .HasOne(t => t.Dog)
