@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 using K9UnitApi.Enums;
 namespace K9UnitApi.Models;
 
-[JsonConverter(typeof(JsonStringEnumConverter))]
+//[JsonConverter(typeof(JsonStringEnumConverter))]
 
 public class TrainingSession
 {

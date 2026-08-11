@@ -4,7 +4,8 @@ using System.Text.Json.Serialization;
 using K9UnitApi.Enums;
 namespace K9UnitApi.Models;
 
-[JsonConverter(typeof(JsonStringEnumConverter))]
+//[JsonConverter(typeof(JsonStringEnumConverter<Specialty>))]
+
 public class Dog
 {
     public int Id { get; set; }

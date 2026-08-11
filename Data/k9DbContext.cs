@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using System.Reflection.Metadata;
 using K9UnitApi.Models;
+using K9UnitApi.Enums;
 namespace K9UnitApi.Data;
 
 public class k9DbContext : DbContext 
@@ -40,5 +41,26 @@ public class k9DbContext : DbContext
         modelBuilder.Entity<Dog>()
             .HasIndex(d => d.MicrochipId)
             .IsUnique();
+
+        modelBuilder
+       .Entity<Dog>()
+       .Property(e => e.Specialty)
+       .HasConversion(
+           v => v.ToString(),
+           v => (Specialty)Enum.Parse(typeof(Specialty), v));
+
+        modelBuilder
+       .Entity<Dog>()
+       .Property(e => e.Status)
+       .HasConversion(
+           v => v.ToString(),
+           v => (Status)Enum.Parse(typeof(Status), v));
+
+        modelBuilder
+       .Entity<TrainingSession>()
+       .Property(e => e.TrainingType)
+       .HasConversion(
+           v => v.ToString(),
+           v => (TrainingType)Enum.Parse(typeof(TrainingType), v));
     }
 }

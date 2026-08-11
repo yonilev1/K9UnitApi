@@ -1,4 +1,5 @@
 using K9UnitApi.Data;
+using K9UnitApi.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,6 +15,8 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 builder.Services.AddDbContext<k9DbContext>(options =>
 options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
 
+
+builder.Services.AddScoped<IDogRepository, DogRepository>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
