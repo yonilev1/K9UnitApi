@@ -1,0 +1,6 @@
+@K9UnitApi_HostAddress = http://localhost:5089
+
+GET {{K9UnitApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
