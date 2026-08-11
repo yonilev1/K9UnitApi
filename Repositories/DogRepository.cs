@@ -115,4 +115,17 @@ public class DogRepository : IDogRepository
             HandlerNRank = s.Handler != null ? s.Handler.Rank : null,
         }).ToListAsync();
     }
+
+    public async Task<IEnumerable<PerformenceSumDto>> GetDogsPerformenceStats()
+    {
+        return await _context.Dogs.Select(s =>
+        new PerformenceSumDto
+        {
+            Id = s.Id,
+            Name = s.Name,
+            Specialty = s.Specialty.ToString(),
+            NumberOfTrainings = s.TrainingSessions.Count,
+            AveragePerformence = s.TrainingSessions.Count > 0 ? Math.Round(s.TrainingSessions.Average(ts => ts.PerformanceScore), 2) : null
+        }).ToListAsync();
+    }
 }

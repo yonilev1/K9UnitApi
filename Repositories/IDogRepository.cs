@@ -10,4 +10,6 @@ public interface IDogRepository
     Task<IEnumerable<SearchDogDto>> Filter(string? spetiality, string? status);
 
     Task<IEnumerable<DogsWithHandlerDto>> GetDogsWithHandler();
+
+    Task<IEnumerable<PerformenceSumDto>> GetDogsPerformenceStats();
 }

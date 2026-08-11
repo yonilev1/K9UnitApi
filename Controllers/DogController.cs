@@ -57,4 +57,10 @@ public class DogController : ControllerBase
     {
         return Ok(await _repository.GetDogsWithHandler());
     }
+
+    [HttpGet("performance-summary")]
+    public async Task<ActionResult<IEnumerable<PerformenceSumDto>>> GetDogsPerformenceStats()
+    {
+        return Ok(await _repository.GetDogsPerformenceStats());
+    }
 }
