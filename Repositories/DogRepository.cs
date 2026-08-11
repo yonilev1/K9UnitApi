@@ -99,4 +99,20 @@ public class DogRepository : IDogRepository
             Status = s.Status.ToString()
         }).ToListAsync();
     }   
+
+    public async Task<IEnumerable<DogsWithHandlerDto>> GetDogsWithHandler()
+    {
+
+        return await _context.Dogs.Select(s =>
+        new DogsWithHandlerDto
+        {
+            Id = s.Id,
+            Name = s.Name,
+            Breed = s.Breed,
+            Specialty = s.Specialty.ToString(),
+            Status = s.Status.ToString(),
+            HandlerName = s.Handler != null ? s.Handler.FullName : null,
+            HandlerNRank = s.Handler != null ? s.Handler.Rank : null,
+        }).ToListAsync();
+    }
 }

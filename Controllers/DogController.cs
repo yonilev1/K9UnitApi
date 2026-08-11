@@ -51,4 +51,10 @@ public class DogController : ControllerBase
             return NotFound(aex.Message);
         }
     }
+
+    [HttpGet("with-handler")]
+    public async Task<ActionResult<IEnumerable<DogsWithHandlerDto>>> GetDogsWithHandler()
+    {
+        return Ok(await _repository.GetDogsWithHandler());
+    }
 }
