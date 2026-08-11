@@ -31,4 +31,10 @@ public class Dog
 
     [Required]
     public Status Status { get; set; }
+
+    public Handler? Handler { get; set; }
+
+    public int? HandlerId { get; set; }
+
+    public List<TrainingSession> TrainingSessions { get; set; } = new List<TrainingSession>();
 }
