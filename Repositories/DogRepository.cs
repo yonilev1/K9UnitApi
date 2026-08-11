@@ -46,18 +46,21 @@ public class DogRepository : IDogRepository
         await _context.SaveChangesAsync();
         var alldog = await _context.Dogs.FirstOrDefaultAsync(d => d.MicrochipId == fullDog.MicrochipId);
 
-
-        CreatedDogDto createdDog = new CreatedDogDto
+        if (alldog != null)
         {
-            Id = alldog.Id,
-            Name = fullDog.Name,
-            Breed = fullDog.Breed,
-            MicrochipId = fullDog.MicrochipId,
-            DateOfBirth = fullDog.DateOfBirth,
-            Specialty = fullDog.Specialty.ToString(),
-            Status = fullDog.Status.ToString()
-        };
-        return createdDog;
+            CreatedDogDto createdDog = new CreatedDogDto
+            {
+                Id = alldog.Id,
+                Name = fullDog.Name,
+                Breed = fullDog.Breed,
+                MicrochipId = fullDog.MicrochipId,
+                DateOfBirth = fullDog.DateOfBirth,
+                Specialty = fullDog.Specialty.ToString(),
+                Status = fullDog.Status.ToString()
+            };
+            return createdDog;
+        }
+        throw new ArgumentException("Somthing Went wronge.");
     }
 
     public async Task<GetDogByIdDto?> GetById(int id)
