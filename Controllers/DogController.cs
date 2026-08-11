@@ -39,4 +39,16 @@ public class DogController : ControllerBase
         return Ok(dog);
     }
 
+    [HttpGet("search")]
+    public async Task<ActionResult<IEnumerable<SearchDogDto>>> Filter(string? spetiality, string? status)
+    {
+        try
+        {
+            return Ok(await _repository.Filter(spetiality, status));
+        }
+        catch (ArgumentException aex)
+        {
+            return NotFound(aex.Message);
+        }
+    }
 }

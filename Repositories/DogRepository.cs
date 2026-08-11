@@ -2,6 +2,7 @@
 using K9UnitApi.DTO_s;
 using K9UnitApi.Enums;
 using K9UnitApi.Models;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection.Metadata.Ecma335;
 
@@ -64,4 +65,38 @@ public class DogRepository : IDogRepository
         };
         return dogDetails;
     }
+
+    public async Task<IEnumerable<SearchDogDto>> Filter(string? spetiality, string? status)
+    {
+        Specialty sp;
+        Status st;
+        if (spetiality != null && !Enum.TryParse<Specialty>(spetiality, out sp))
+            throw new ArgumentException("Spetiality not out of allowed values");
+        if (status != null && !Enum.TryParse<Status>(status, out st))
+            throw new ArgumentException("Status not out of allowed values");
+
+       
+        var query = _context.Dogs.AsQueryable();
+
+        if (spetiality != null)
+        {
+            sp = Enum.Parse<Specialty>(spetiality);
+            query = query.Where(s => s.Specialty == sp);
+        }
+        if (status != null)
+        {
+            st = Enum.Parse<Status>(status);
+            query = query.Where(s => s.Status == st);
+        }
+
+        return await query.Select(s =>
+        new SearchDogDto
+        {
+            Id = s.Id,
+            Name = s.Name,
+            Breed = s.Breed,
+            Specialty = s.Specialty.ToString(),
+            Status = s.Status.ToString()
+        }).ToListAsync();
+    }   
 }
