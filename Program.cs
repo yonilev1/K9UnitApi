@@ -1,3 +1,7 @@
+using K9UnitApi.Data;
+using K9UnitApi.Repositories;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -6,6 +10,15 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+builder.Services.AddDbContext<k9DbContext>(options =>
+options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
+
+
+builder.Services.AddScoped<IDogRepository, DogRepository>();
+builder.Services.AddScoped<ITrainingSessionRepository, TrainingSessionRepository>();
+builder.Services.AddScoped<IHandlerRepository, HandlerRepository>();
 
 var app = builder.Build();
 
