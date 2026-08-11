@@ -39,4 +39,28 @@ public class DogController : ControllerBase
         return Ok(dog);
     }
 
+    [HttpGet("search")]
+    public async Task<ActionResult<IEnumerable<SearchDogDto>>> Filter(string? spetiality, string? status)
+    {
+        try
+        {
+            return Ok(await _repository.Filter(spetiality, status));
+        }
+        catch (ArgumentException aex)
+        {
+            return NotFound(aex.Message);
+        }
+    }
+
+    [HttpGet("with-handler")]
+    public async Task<ActionResult<IEnumerable<DogsWithHandlerDto>>> GetDogsWithHandler()
+    {
+        return Ok(await _repository.GetDogsWithHandler());
+    }
+
+    [HttpGet("performance-summary")]
+    public async Task<ActionResult<IEnumerable<PerformenceSumDto>>> GetDogsPerformenceStats()
+    {
+        return Ok(await _repository.GetDogsPerformenceStats());
+    }
 }
