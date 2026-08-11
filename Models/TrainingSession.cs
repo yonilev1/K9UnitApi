@@ -30,4 +30,6 @@ public class TrainingSession
     public string Evaluator { get; set; } = string.Empty;
 
     public Dog? Dog { get; set; }
+
+    public int? DogId { get; set; }
 }
