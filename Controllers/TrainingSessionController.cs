@@ -44,7 +44,15 @@ public class TrainingSessionController : ControllerBase
     [HttpGet("paged")]
     public async Task<ActionResult<PageData<PagedDto>>> GetPagedData(int page = 1, int pageSize = 10)
     {
-        return Ok( await _repository.GetPagedData(page, pageSize));
+        try
+        {
+            return Ok(await _repository.GetPagedData(page, pageSize));
+        }
+        catch (ArgumentException ae)
+        {
+            return NotFound(ae.Message);
+        }
+        
     }
 
 }

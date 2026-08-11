@@ -1,8 +1,11 @@
-using K9UnitApi.Repositories;
-using Microsoft.AspNetCore.Mvc;
 using K9UnitApi.DTO_s;
 using K9UnitApi.Models;
+using K9UnitApi.Repositories;
+using Microsoft.AspNetCore.Mvc;
+using System.Text.Json.Serialization;
 namespace K9UnitApi.Controllers;
+
+[JsonConverter(typeof(JsonStringEnumConverter))]
 
 [ApiController]
 [Route("api/[controller]")]
@@ -16,13 +19,13 @@ public class DogController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult<Dog>> Create(CreateDogDto dog)
+    public async Task<ActionResult<CreatedDogDto>> Create(CreateDogDto dog)
     {
         try
         {
-            Dog fullDog = await _repository.Create(dog);
+            CreatedDogDto fullDog = await _repository.Create(dog);
 
-            return CreatedAtAction(nameof(GetById), new { Id = fullDog.Id }, fullDog);
+            return CreatedAtAction(nameof(Create), fullDog);
         }
         catch (ArgumentException aex)
         {

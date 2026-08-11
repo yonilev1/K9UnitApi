@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace K9UnitApi.Migrations
 {
     [DbContext(typeof(k9DbContext))]
-    [Migration("20260811073713_InitialCreate")]
+    [Migration("20260811134148_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -147,7 +147,7 @@ namespace K9UnitApi.Migrations
                     b.HasOne("K9UnitApi.Models.Handler", "Handler")
                         .WithOne("Dog")
                         .HasForeignKey("K9UnitApi.Models.Dog", "HandlerId")
-                        .OnDelete(DeleteBehavior.NoAction);
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.Navigation("Handler");
                 });

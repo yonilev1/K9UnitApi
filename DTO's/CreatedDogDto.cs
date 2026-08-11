@@ -1,4 +1,6 @@
-﻿namespace K9UnitApi.DTO_s;
+﻿using K9UnitApi.Enums;
+
+namespace K9UnitApi.DTO_s;
 
 public class CreatedDogDto
 {
