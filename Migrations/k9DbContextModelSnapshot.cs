@@ -144,7 +144,7 @@ namespace K9UnitApi.Migrations
                     b.HasOne("K9UnitApi.Models.Handler", "Handler")
                         .WithOne("Dog")
                         .HasForeignKey("K9UnitApi.Models.Dog", "HandlerId")
-                        .OnDelete(DeleteBehavior.NoAction);
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.Navigation("Handler");
                 });

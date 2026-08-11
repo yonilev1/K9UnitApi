@@ -63,7 +63,8 @@ namespace K9UnitApi.Migrations
                         name: "FK_Dogs_Handlers_HandlerId",
                         column: x => x.HandlerId,
                         principalTable: "Handlers",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.SetNull);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 

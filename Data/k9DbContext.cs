@@ -1,8 +1,9 @@
 ﻿
-using Microsoft.EntityFrameworkCore;
-using System.Reflection.Metadata;
-using K9UnitApi.Models;
 using K9UnitApi.Enums;
+using K9UnitApi.Models;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Hosting;
+using System.Reflection.Metadata;
 namespace K9UnitApi.Data;
 
 public class k9DbContext : DbContext 
@@ -25,6 +26,10 @@ public class k9DbContext : DbContext
             .HasForeignKey<Dog>(d => d.HandlerId)
             .IsRequired(false)
             .OnDelete(DeleteBehavior.SetNull);
+
+        //modelBuilder.Entity<Dog>()
+        //.Property(e => e.HandlerId)
+        //.IsRequired(false);
 
         modelBuilder.Entity<TrainingSession>()
             .HasOne(t => t.Dog)
