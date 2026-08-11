@@ -17,6 +17,8 @@ options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
 
 
 builder.Services.AddScoped<IDogRepository, DogRepository>();
+builder.Services.AddScoped<ITrainingSessionRepository, TrainingSessionRepository>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
