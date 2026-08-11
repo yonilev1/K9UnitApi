@@ -27,5 +27,5 @@ public class Handler
     [MaxLength(100)]
     public string BaseAssigned { get; set; } = string.Empty;
 
-    public Dog? dog { get; set; }
+    public Dog? Dog { get; set; }
 }
